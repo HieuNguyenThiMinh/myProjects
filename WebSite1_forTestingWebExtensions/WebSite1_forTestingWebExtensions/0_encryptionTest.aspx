@@ -26,16 +26,13 @@
 			}
 
 			function encryptClick() {
-				alert('hello');
-				var txt = $('#rcOrigin').html();
-				alert($('#rcOrigin').html());
-				alert(document.getElementById('rcOrigin').innerHTML);
-				$('#rcEncrypted').html(RC.crypt(txt));
+				var txt = $('#rcOrigin').val();
+				$('#rcEncrypted').val(RC.crypt(txt));
 			}
 
 			function decryptClick() {
-				var txt = $('#rcEncrypted').html();
-				$('#rcOrigin').html(RC.descryp(txt));
+				var txt = $('#rcEncrypted').val();
+				$('#rcOrigin').val(RC.descryp(txt));
 			}
 	</script>
 
