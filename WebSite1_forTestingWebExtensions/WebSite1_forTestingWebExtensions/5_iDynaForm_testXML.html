@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title></title>
+	<script type="text/javascript">
+            function test() {
+				var kml = document.getElementById("kml"); //.item(0);
+				alert(new XMLSerializer().serializeToString(kml));
+				document.getElementById("result").innerHTML = new XMLSerializer().serializeToString(kml);
+            }
+	</script>
+</head>
+<body>
+	<div id="result">mot hai ba</div>
+
+
+	<Kml id="kml" xmlns="http://www.opengis.net/kml/2.2">
+		<ABC>
+			<name>KML Samples</name>
+			<open>1</open>
+			<description>samples</description>
+			<Style1 id="downArrowIcon">
+				<IconStyle>
+					<Icon>
+
+					</Icon>
+				</IconStyle>
+			</Style1>
+		</ABC>
+	</Kml>
+
+
+
+
+	<script>
+		test();
+	</script>
+</body>
+
+
+</html>
