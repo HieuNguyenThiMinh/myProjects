@@ -1256,7 +1256,14 @@ $(document).ready(function () {
 
     window.addEventListener("message", messageReceive, false);
 
+	//-----------------------------js Signature SVG---------------------
 
+
+    $("#signature").jSignature();
+
+
+
+	//---------------------------PDF capture---------------------
     (function () {
     	var
 		 form = $('#reamForm'),
@@ -1267,52 +1274,78 @@ $(document).ready(function () {
     		$('body').scrollTop(0);
     		createPDF();
     	});
-    	// create canvas object  
-    	function getCanvas() {
-    		form.width((a4[0] * 1.33333) - 80).css('max-width', 'none');
-    		return html2canvas(form, {
-    			imageTimeout: 2000,
-    			removeContainer: true
+    	$('#create_imgsvg').on('click', function () { createSvgSignature(); });
+    	
+    	//-----create pdf  
+    	function createPDF() {
+
+			//--------- create pdf directly from jsPDF.addHTML (this method make use of html2canvas too)
+    		//var pdf = new jsPDF('p', 'pt', 'a4');
+    		var pdf = new jsPDF();
+    		pdf.addHTML($('#divForm'), function () {
+    			var dataUri = pdf.output("datauristring");
+    			console.log(dataUri);
+    			var ele1 = document.createElement('iframe');
+    			ele1.width = '1000';
+    			ele1.height = '500';
+    			ele1.src = dataUri;
+    			document.body.appendChild(ele1);
+    			return;
     		});
 
-    		
-    	}
-    	//create pdf  
-    	function createPDF() {
+    		return;
+
+			//--------- create image by html2canvas then add image to pdf then output to dataUri===> not sure why pdf uri broken
+
     		html2canvas($("#reamForm"), {
     			onrendered: function (canvas) {
     				// canvas is the final rendered <canvas> element
-    				var myImage = canvas.toDataURL("image/png");  //'image/png'
+    				var myImage = canvas.toDataURL("image/jpeg,1.0");  //'image/png'
+
+
     				//window.open(myImage);
     				var ele = document.createElement('div');
-    				
     				var pHtml = "<img src=" + myImage + " />";
     				ele.innerHTML = pHtml;
     				document.body.appendChild(ele);
 
 
+    				//var doc = new jsPDF({
+    				//	unit: 'px',
+    				//	format: 'a4'
+    				//});
+    				var doc = new jsPDF();
+    				doc.addImage(myImage, 'JPEG', 0, 0);
+    				//doc.save('Bhavdip-html-to-pdf.pdf');//download in browser
+    				//var dataUri = doc.output('datauri'); //data:application/pdf;base64,JVBERi0xL......
+    				var dataUri = doc.output("datauristring");
 
-    					var doc = new jsPDF({
-    					 	unit: 'px',
-    					 	format: 'a4'
-    					 });
-    					doc.addImage(myImage, 'PNG', 0,0);
-    					//doc.save('Bhavdip-html-to-pdf.pdf');//download in browser
-						var dataUri = doc.output('datauri'); //data:application/pdf;base64,JVBERi0xL......
-						var dataArray = doc.output('arraybuffer');
-						var dataArrayUint8 = new Uint8Array(doc.output('arraybuffer'));
-						var blob = new Blob(dataArrayUint8, { type: "application/pdf" });
+    				//dataUri = "data:application/pdf;base64,JVBERi0xLjMKMyAwIG9iago8PC9UeXBlIC9QYWdlCi9QYXJlbnQgMSAwIFIKL1Jlc291cmNlcyAyIDAgUgovTWVkaWFCb3ggWzAgMCA1OTUuMjggODQxLjg5XQovQ29udGVudHMgNCAwIFIKPj4KZW5kb2JqCjQgMCBvYmoKPDwvTGVuZ3RoIDIwOD4+CnN0cmVhbQowLjU3IHcKMCBHCnEKcSBCVCAwIGcgNDIuNTIgNzgzLjI5IFRkCjAgLTI0LjAwIFRkCjAuMDAwIGcKL0YxMCAyNC4wMCBUZiAoVEVTVElORyBqc3BkZi5qcykgVGoKRVQgUQpxIEJUIDAgZyA0Mi41MiA3NDMuMjEgVGQKMCAtMTIuMDAgVGQKL0Y5IDEyLjAwIFRmIChCZSBjYWxtIGFuZCBmb2N1cywgYWxsIHByb2JsZW1zIHdpbGwgYmUgc29sdmVkISkgVGoKRVQgUQpRCmVuZHN0cmVhbQplbmRvYmoKMSAwIG9iago8PC9UeXBlIC9QYWdlcwovS2lkcyBbMyAwIFIgXQovQ291bnQgMQo+PgplbmRvYmoKNSAwIG9iago8PC9CYXNlRm9udC9IZWx2ZXRpY2EvVHlwZS9Gb250Ci9FbmNvZGluZy9XaW5BbnNpRW5jb2RpbmcKL1N1YnR5cGUvVHlwZTE+PgplbmRvYmoKNiAwIG9iago8PC9CYXNlRm9udC9IZWx2ZXRpY2EtQm9sZC9UeXBlL0ZvbnQKL0VuY29kaW5nL1dpbkFuc2lFbmNvZGluZwovU3VidHlwZS9UeXBlMT4+CmVuZG9iago3IDAgb2JqCjw8L0Jhc2VGb250L0hlbHZldGljYS1PYmxpcXVlL1R5cGUvRm9udAovRW5jb2RpbmcvV2luQW5zaUVuY29kaW5nCi9TdWJ0eXBlL1R5cGUxPj4KZW5kb2JqCjggMCBvYmoKPDwvQmFzZUZvbnQvSGVsdmV0aWNhLUJvbGRPYmxpcXVlL1R5cGUvRm9udAovRW5jb2RpbmcvV2luQW5zaUVuY29kaW5nCi9TdWJ0eXBlL1R5cGUxPj4KZW5kb2JqCjkgMCBvYmoKPDwvQmFzZUZvbnQvQ291cmllci9UeXBlL0ZvbnQKL0VuY29kaW5nL1dpbkFuc2lFbmNvZGluZwovU3VidHlwZS9UeXBlMT4+CmVuZG9iagoxMCAwIG9iago8PC9CYXNlRm9udC9Db3VyaWVyLUJvbGQvVHlwZS9Gb250Ci9FbmNvZGluZy9XaW5BbnNpRW5jb2RpbmcKL1N1YnR5cGUvVHlwZTE+PgplbmRvYmoKMTEgMCBvYmoKPDwvQmFzZUZvbnQvQ291cmllci1PYmxpcXVlL1R5cGUvRm9udAovRW5jb2RpbmcvV2luQW5zaUVuY29kaW5nCi9TdWJ0eXBlL1R5cGUxPj4KZW5kb2JqCjEyIDAgb2JqCjw8L0Jhc2VGb250L0NvdXJpZXItQm9sZE9ibGlxdWUvVHlwZS9Gb250Ci9FbmNvZGluZy9XaW5BbnNpRW5jb2RpbmcKL1N1YnR5cGUvVHlwZTE+PgplbmRvYmoKMTMgMCBvYmoKPDwvQmFzZUZvbnQvVGltZXMtUm9tYW4vVHlwZS9Gb250Ci9FbmNvZGluZy9XaW5BbnNpRW5jb2RpbmcKL1N1YnR5cGUvVHlwZTE+PgplbmRvYmoKMTQgMCBvYmoKPDwvQmFzZUZvbnQvVGltZXMtQm9sZC9UeXBlL0ZvbnQKL0VuY29kaW5nL1dpbkFuc2lFbmNvZGluZwovU3VidHlwZS9UeXBlMT4+CmVuZG9iagoxNSAwIG9iago8PC9CYXNlRm9udC9UaW1lcy1JdGFsaWMvVHlwZS9Gb250Ci9FbmNvZGluZy9XaW5BbnNpRW5jb2RpbmcKL1N1YnR5cGUvVHlwZTE+PgplbmRvYmoKMTYgMCBvYmoKPDwvQmFzZUZvbnQvVGltZXMtQm9sZEl0YWxpYy9UeXBlL0ZvbnQKL0VuY29kaW5nL1dpbkFuc2lFbmNvZGluZwovU3VidHlwZS9UeXBlMT4+CmVuZG9iagoxNyAwIG9iago8PC9CYXNlRm9udC9aYXBmRGluZ2JhdHMvVHlwZS9Gb250Ci9FbmNvZGluZy9TdGFuZGFyZEVuY29kaW5nCi9TdWJ0eXBlL1R5cGUxPj4KZW5kb2JqCjIgMCBvYmoKPDwKL1Byb2NTZXQgWy9QREYgL1RleHQgL0ltYWdlQiAvSW1hZ2VDIC9JbWFnZUldCi9Gb250IDw8Ci9GMSA1IDAgUgovRjIgNiAwIFIKL0YzIDcgMCBSCi9GNCA4IDAgUgovRjUgOSAwIFIKL0Y2IDEwIDAgUgovRjcgMTEgMCBSCi9GOCAxMiAwIFIKL0Y5IDEzIDAgUgovRjEwIDE0IDAgUgovRjExIDE1IDAgUgovRjEyIDE2IDAgUgovRjEzIDE3IDAgUgo+PgovWE9iamVjdCA8PAo+Pgo+PgplbmRvYmoKMTggMCBvYmoKPDwKL1Byb2R1Y2VyIChqc1BERiAxLngtbWFzdGVyKQovQ3JlYXRpb25EYXRlIChEOjIwMTgwMTMxMTcwMTA3LTA1JzAwJykKPj4KZW5kb2JqCjE5IDAgb2JqCjw8Ci9UeXBlIC9DYXRhbG9nCi9QYWdlcyAxIDAgUgovT3BlbkFjdGlvbiBbMyAwIFIgL0ZpdEggbnVsbF0KL1BhZ2VMYXlvdXQgL09uZUNvbHVtbgo+PgplbmRvYmoKeHJlZgowIDIwCjAwMDAwMDAwMDAgNjU1MzUgZiAKMDAwMDAwMDM3NSAwMDAwMCBuIAowMDAwMDAxNjY5IDAwMDAwIG4gCjAwMDAwMDAwMDkgMDAwMDAgbiAKMDAwMDAwMDExOCAwMDAwMCBuIAowMDAwMDAwNDMyIDAwMDAwIG4gCjAwMDAwMDA1MjIgMDAwMDAgbiAKMDAwMDAwMDYxNyAwMDAwMCBuIAowMDAwMDAwNzE1IDAwMDAwIG4gCjAwMDAwMDA4MTcgMDAwMDAgbiAKMDAwMDAwMDkwNSAwMDAwMCBuIAowMDAwMDAwOTk5IDAwMDAwIG4gCjAwMDAwMDEwOTYgMDAwMDAgbiAKMDAwMDAwMTE5NyAwMDAwMCBuIAowMDAwMDAxMjkwIDAwMDAwIG4gCjAwMDAwMDEzODIgMDAwMDAgbiAKMDAwMDAwMTQ3NiAwMDAwMCBuIAowMDAwMDAxNTc0IDAwMDAwIG4gCjAwMDAwMDE5MDUgMDAwMDAgbiAKMDAwMDAwMTk5NiAwMDAwMCBuIAp0cmFpbGVyCjw8Ci9TaXplIDIwCi9Sb290IDE5IDAgUgovSW5mbyAxOCAwIFIKPj4Kc3RhcnR4cmVmCjIxMDAKJSVFT0Y=";
+    				var ele1= document.createElement('iframe');
+    				ele1.src = dataUri;
+    				document.body.appendChild(ele1);
+
+						//var dataArray = doc.output('arraybuffer');
+						//var dataArrayUint8 = new Uint8Array(doc.output('arraybuffer'));
+						//var blob = new Blob(dataArrayUint8, { type: "application/pdf" });
 
 
-						var dataArrayBase64 = btoa(dataArrayUint8);
-						var dataUriString = doc.output('datauristring'); //same as dataUri
-						var dataRaw = btoa(doc.output()); //raw string
-						var numberOfPages = doc.internal.getNumberOfPages();
-    					window.open(dataUri);
+						//var dataArrayBase64 = btoa(dataArrayUint8);
+						//var dataUriString = doc.output('datauristring'); //same as dataUri
+						//var dataRaw = btoa(doc.output()); //raw string
+						//var numberOfPages = doc.internal.getNumberOfPages();
+    					//window.open(dataUri);
     			}
     		});
 
-
+    		// create canvas object  
+    		//function getCanvas() {
+    		//	form.width((a4[0] * 1.33333) - 80).css('max-width', 'none');
+    		//	return html2canvas(form, {
+    		//		imageTimeout: 2000,
+    		//		removeContainer: true
+    		//	});
+    		//}
     		//getCanvas();
     		//.then(function (canvas) {
     		//	var
@@ -1328,6 +1361,14 @@ $(document).ready(function () {
     	}
 
   
+    	//---- create signagure svg
+    	function createSvgSignature() {
+    		var result = $("#signature").jSignature("getData", "svgbase64");
+    		result = 'data:' + result[0] + "," + result[1];
+    		console.log(result);
+    		var stop = 0;
+    	}
+
 
     }());
 

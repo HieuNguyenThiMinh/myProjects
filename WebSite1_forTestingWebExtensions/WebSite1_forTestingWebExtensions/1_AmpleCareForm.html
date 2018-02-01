@@ -114,8 +114,12 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.js"> </script>
+	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+
+	<script src="js/jSignature.min.js"></script>
+
 
 	<script type="text/javascript" src="1_AmpleCareForm.js"></script>
 
@@ -124,258 +128,262 @@
 	<div id="reamConfirmation" name="reamConfirmation" class="alert alert-success hidden">
 		<span class="glyphicon glyphicon-star"></span> Thank you for submit the document!
 	</div>
-	<form id="reamForm" name="reamForm" method="post">
-		<div class="container ">
-			<!--logo---------->
-			<div class="row" style="height:50px;">
-				<div class="col-xs-12">
-					<img src="images/amplecareLogo1.jpg" class="img-responsive imgLogo" />
+	<div id="divForm" style="background-color:#fff;">
+		<form id="reamForm" name="reamForm" method="post">
+			<div class="container ">
+				<!--logo---------->
+				<div class="row" style="height:50px;">
+					<div class="col-xs-12">
+						<img src="images/amplecareLogo1.jpg" class="img-responsive imgLogo" />
+					</div>
+					<div class="col-xs-12">
+						<hr style="margin-top:0px;" />
+					</div>
 				</div>
-				<div class="col-xs-12">
-					<hr style="margin-top:0px;" />
-				</div>
-			</div>
-			<!--open text---------->
-			<!--      <div class="row">
+				<!--open text---------->
+				<!--      <div class="row">
 				<div class="col-xs-12">
 					<div>
 						This document must be completed by the applicant’s authorized health-care practitioner as defined in the Access to Cannabis for Medical Purposes (ACMPR). An authorized health-care practitioner includes physicians in all provinces and territories, and nurse practitioners in provinces and territories where prescribing medical cannabis is permitted under their scope of practice. If another document is used, it must contain all of the information below.
 					</div>
 				</div>
 			</div>-->
-			<!--Patient info & prescription ---------->
-			<h3 style="color:green;padding-top:0px;margin-left:-20px;">Patient Information</h3>
-			<div class="row rowwider">
-				<!--patient infor on the left-->
-				<div class="col-xs-6">
-					<div class="cssReAmGroupBorderFill1">
-						<div id="reamFirstNameGroup" class="form-group form-group-sm required">
-							<label for="reamFirstName" class="cssReAmLabel">Patient's name</label>
-							<div style="border:1px solid #ccc;border-radius:4px;">
-								<input class="form-control input-sm" id="reamFirstName" name="reamFirstName" placeholder="First Name" style="border:none;" />
-								<input class="form-control" id="reamLastName" name="reamLastName" placeholder="Last Name" style="border:none;" />
+				<!--Patient info & prescription ---------->
+				<h3 style="color:green;padding-top:0px;margin-left:-20px;">Patient Information</h3>
+				<div class="row rowwider">
+					<!--patient infor on the left-->
+					<div class="col-xs-6">
+						<div class="cssReAmGroupBorderFill1">
+							<div id="reamFirstNameGroup" class="form-group form-group-sm required">
+								<label for="reamFirstName" class="cssReAmLabel">Patient's name</label>
+								<div style="border:1px solid #ccc;border-radius:4px;">
+									<input class="form-control input-sm" id="reamFirstName" name="reamFirstName" placeholder="First Name" style="border:none;" />
+									<input class="form-control" id="reamLastName" name="reamLastName" placeholder="Last Name" style="border:none;" />
+								</div>
 							</div>
-						</div>
 
-						<!-- <div id="reamLastNameGroup" class="form-group form-group-sm required">
+							<!-- <div id="reamLastNameGroup" class="form-group form-group-sm required">
 							 <label for="reamLastName" class="cssReAmLabel">Last Name</label>
 
 						 </div>-->
-						<div id="reamDobGroup" class="form-group form-group-sm required">
-							<label for="reamDob" class="cssReAmLabel">Date of Birth</label>
-							<input class="form-control" id="reamDob" name="reamDob" placeholder="Date of Birth" />
-						</div>
-						<div id="reamEmailGroup" class="form-group form-group-sm required">
-							<label for="reamEmail" class="cssReAmLabel">Email</label>
-							<input class="form-control" id="reamEmail" name="reamEmail" placeholder="Email" />
-						</div>
-						<div id="reamSelectShippingGroup" class="form-group form-group-sm required">
-							<label for="reamSelectShipping" class="cssReAmLabel">Selected shipping method</label>
-							<select class="form-control" id="reamSelectShipping" name="reamSelectShipping">
-								<!--residence, mailing, or physician-->
-								<option value="0">Choose shipping method</option>
-								<option value="residence" selected="selected">Residence</option>
-								<option value="mailing">Mailing</option>
-								<option value="physician">Physician</option>
-							</select>
-						</div>
-
-						<div id="reamPatAddressGroup" class="form-group form-group-sm required">
-							<label for="reamPatAddress" class="cssReAmLabel">Address</label>
-							<div style="border:1px solid #ccc;border-radius:4px;">
-								<input class="form-control" id="reamPatAddress" name="reamPatAddress" placeholder="Street address" style="border:none;" />
-								<input class="form-control" id="reamPatCity" name="reamPatCity" placeholder="City" style="border:none;" />
-								<select class="form-control" id="reamPatProvince" name="reamPatProvince" style="border:none;">
-									<option value="0">Choose Province</option>
-									<option value="AB">Alberta</option>
-									<option value="BC">British Columbia</option>
-									<option value="MB">Manitoba</option>
-									<option value="NB">New Brunswick</option>
-									<option value="NL">Newfoundland and Labrador</option>
-									<option value="NS">Nova Scotia</option>
-									<option value="NT">Northwest Territories</option>
-									<option value="NU">Nunavut</option>
-									<option value="ON">Ontario</option>
-									<option value="PE">Prince Edward Island</option>
-									<option value="QC">Quebec</option>
-									<option value="SK">Saskatchewan</option>
-									<option value="YT">Yukon</option>
+							<div id="reamDobGroup" class="form-group form-group-sm required">
+								<label for="reamDob" class="cssReAmLabel">Date of Birth</label>
+								<input class="form-control" id="reamDob" name="reamDob" placeholder="Date of Birth" />
+							</div>
+							<div id="reamEmailGroup" class="form-group form-group-sm required">
+								<label for="reamEmail" class="cssReAmLabel">Email</label>
+								<input class="form-control" id="reamEmail" name="reamEmail" placeholder="Email" />
+							</div>
+							<div id="reamSelectShippingGroup" class="form-group form-group-sm required">
+								<label for="reamSelectShipping" class="cssReAmLabel">Selected shipping method</label>
+								<select class="form-control" id="reamSelectShipping" name="reamSelectShipping">
+									<!--residence, mailing, or physician-->
+									<option value="0">Choose shipping method</option>
+									<option value="residence" selected="selected">Residence</option>
+									<option value="mailing">Mailing</option>
+									<option value="physician">Physician</option>
 								</select>
-								<input class="form-control" id="reamPatPostal" name="reamPatPostal" placeholder="Postal code" style="border:none;" />
+							</div>
+
+							<div id="reamPatAddressGroup" class="form-group form-group-sm required">
+								<label for="reamPatAddress" class="cssReAmLabel">Address</label>
+								<div style="border:1px solid #ccc;border-radius:4px;">
+									<input class="form-control" id="reamPatAddress" name="reamPatAddress" placeholder="Street address" style="border:none;" />
+									<input class="form-control" id="reamPatCity" name="reamPatCity" placeholder="City" style="border:none;" />
+									<select class="form-control" id="reamPatProvince" name="reamPatProvince" style="border:none;">
+										<option value="0">Choose Province</option>
+										<option value="AB">Alberta</option>
+										<option value="BC">British Columbia</option>
+										<option value="MB">Manitoba</option>
+										<option value="NB">New Brunswick</option>
+										<option value="NL">Newfoundland and Labrador</option>
+										<option value="NS">Nova Scotia</option>
+										<option value="NT">Northwest Territories</option>
+										<option value="NU">Nunavut</option>
+										<option value="ON">Ontario</option>
+										<option value="PE">Prince Edward Island</option>
+										<option value="QC">Quebec</option>
+										<option value="SK">Saskatchewan</option>
+										<option value="YT">Yukon</option>
+									</select>
+									<input class="form-control" id="reamPatPostal" name="reamPatPostal" placeholder="Postal code" style="border:none;" />
+								</div>
+							</div>
+							<div id="reamPatCityGroup" class="form-group form-group-sm required">
+								<!--<label for="reamPatCity" class="cssReAmLabel">City</label>-->
+							</div>
+							<div id="reamPatProvinceGroup" class="form-group form-group-sm required">
+								<!--<label for="reamPatProvince" class="cssReAmLabel">Province</label>-->
+							</div>
+							<div id="reamPatPostalGroup" class="form-group form-group-sm required">
+								<!-- <label for="reamPatPostal" class="cssReAmLabel">Postal code</label>-->
+							</div>
+							<div id="reamPatEditGroup" style="display:none;font-family:Arial;font-size:smaller;color:blue;font-style:italic;">
+								Updated on:
+								<span id="reamPatUpdatedAt"></span>
+								<a href="#" style="float:right;" id="reamPatEdit">Edit <span class="glyphicon glyphicon-pencil"></span></a>
 							</div>
 						</div>
-						<div id="reamPatCityGroup" class="form-group form-group-sm required">
-							<!--<label for="reamPatCity" class="cssReAmLabel">City</label>-->
-						</div>
-						<div id="reamPatProvinceGroup" class="form-group form-group-sm required">
-							<!--<label for="reamPatProvince" class="cssReAmLabel">Province</label>-->
-						</div>
-						<div id="reamPatPostalGroup" class="form-group form-group-sm required">
-							<!-- <label for="reamPatPostal" class="cssReAmLabel">Postal code</label>-->
-						</div>
-						<div id="reamPatEditGroup" style="display:none;font-family:Arial;font-size:smaller;color:blue;font-style:italic;">
-							Updated on:
-							<span id="reamPatUpdatedAt"></span>
-							<a href="#" style="float:right;" id="reamPatEdit">Edit <span class="glyphicon glyphicon-pencil"></span></a>
-						</div>
 					</div>
-				</div>
-				<!--prescription infor on the right-->
-				<div class="col-xs-6">
-					<div class="cssReAmGroupBorderFill2">
-						<div id="reamMedConditionGroup" class="form-group form-group-sm">
-							<label for="reamMedCondition" class="cssReAmLabel">Medical condition</label>
-							<textarea class="form-control" id="reamMedCondition" placeholder="Medication condition" style="height:152px;"></textarea>
-						</div>
-						<div id="reamMedGramGroup" class="form-group form-group-sm required">
-							<label for="reamMedGram" class="cssReAmLabel">Number of Grams/day</label>
-							<input class="form-control" id="reamMedGram" name="reamMedGram" placeholder="Number" />
-						</div>
-						<div id="reamMedScriptStartGroup" class="form-group form-group-sm required">
-							<label for="reamMedScriptStart" class="cssReAmLabel">Script Start</label>
-							<input class="form-control" id="reamMedScriptStart" name="reamMedScriptStart" placeholder="Select a Date" />
-						</div>
-						<div id="reamMedScriptEndGroup" class="form-group form-group-sm required">
-							<label for="reamMedScriptEnd" class="cssReAmLabel">Script End</label>
-							<input required class="form-control" id="reamMedScriptEnd" name="reamMedScriptEnd" placeholder="Select a Date" />
-						</div>
-						<div id="reamMedSelectLpGroup" class="form-group form-group-sm required">
-							<label for="reamMedSelectLp" class="cssReAmLabel">Selected Licence Producer</label>
-							<select class="form-control" id="reamMedSelectLp" name="reamMedSelectLp">
-								<option value="0">Choose license producer</option>
-							</select>
-						</div>
-
-					</div>
-				</div>
-
-			</div>
-			<!--Physician info  ---------->
-			<h3 style="color:rgb(158, 206, 249);margin-left:-20px;">Health-Care Practitioner Information</h3>
-			<div class="row rowwider">
-				<!--Physician infor on the left-->
-				<div class="col-xs-6">
-					<div class="cssReAmGroupBorder">
-						<div id="reamPhysTitleGroup" class="form-group form-group-sm">
-							<label for="reamPhysTitle" class="cssReAmLabel">Title</label>
-							<input class="form-control" id="reamPhysTitle" placeholder="Title" />
-						</div>
-						<div id="reamPhysFirstNameGroup" class="form-group form-group-sm required">
-							<label for="reamPhysFirstName" class="cssReAmLabel">Physician's name</label>
-							<div style="border:1px solid #ccc;border-radius:4px;">
-								<input class="form-control" id="reamPhysFirstName" name="reamPhysFirstName" placeholder="First Name" style="border:none;" />
-								<input class="form-control" id="reamPhysLastName" name="reamPhysLastName" placeholder="Last Name" style="border:none;" />
+					<!--prescription infor on the right-->
+					<div class="col-xs-6">
+						<div class="cssReAmGroupBorderFill2">
+							<div id="reamMedConditionGroup" class="form-group form-group-sm">
+								<label for="reamMedCondition" class="cssReAmLabel">Medical condition</label>
+								<textarea class="form-control" id="reamMedCondition" placeholder="Medication condition" style="height:152px;"></textarea>
 							</div>
-						</div>
-
-
-
-						<div id="reamPhysBusinessAddressGroup" class="form-group form-group-sm required">
-							<label for="reamPhysBusinessAddress" class="cssReAmLabel">Business Address</label>
-							<div style="border:1px solid #ccc;border-radius:4px;">
-								<input class="form-control" id="reamPhysBusinessAddress" name="reamPhysBusinessAddress" placeholder="Street Address" style="border:none;" />
-								<input class="form-control" id="reamPhysCity" name="reamPhysCity" placeholder="City" style="border:none;" />
-								<select class="form-control" id="reamPhysProvince" name="reamPhysProvince" style="border:none;">
-									<option value="0">Choose province</option>
-									<option value="AB">Alberta</option>
-									<option value="BC">British Columbia</option>
-									<option value="MB">Manitoba</option>
-									<option value="NB">New Brunswick</option>
-									<option value="NL">Newfoundland and Labrador</option>
-									<option value="NS">Nova Scotia</option>
-									<option value="NT">Northwest Territories</option>
-									<option value="NU">Nunavut</option>
-									<option value="ON">Ontario</option>
-									<option value="PE">Prince Edward Island</option>
-									<option value="QC">Quebec</option>
-									<option value="SK">Saskatchewan</option>
-									<option value="YT">Yukon</option>
+							<div id="reamMedGramGroup" class="form-group form-group-sm required">
+								<label for="reamMedGram" class="cssReAmLabel">Number of Grams/day</label>
+								<input class="form-control" id="reamMedGram" name="reamMedGram" placeholder="Number" />
+							</div>
+							<div id="reamMedScriptStartGroup" class="form-group form-group-sm required">
+								<label for="reamMedScriptStart" class="cssReAmLabel">Script Start</label>
+								<input class="form-control" id="reamMedScriptStart" name="reamMedScriptStart" placeholder="Select a Date" />
+							</div>
+							<div id="reamMedScriptEndGroup" class="form-group form-group-sm required">
+								<label for="reamMedScriptEnd" class="cssReAmLabel">Script End</label>
+								<input required class="form-control" id="reamMedScriptEnd" name="reamMedScriptEnd" placeholder="Select a Date" />
+							</div>
+							<div id="reamMedSelectLpGroup" class="form-group form-group-sm required">
+								<label for="reamMedSelectLp" class="cssReAmLabel">Selected Licence Producer</label>
+								<select class="form-control" id="reamMedSelectLp" name="reamMedSelectLp">
+									<option value="0">Choose license producer</option>
 								</select>
-								<input class="form-control" id="reamPhysPostalCode" name="reamPhysPostalCode" placeholder="Postal Code" style="border:none;" />
 							</div>
-						</div>
 
+						</div>
 					</div>
+
 				</div>
-				<!--physician infor on the right-->
-				<div class="col-xs-6">
-					<div class="cssReAmGroupBorder">
-						<!--<div id="reamPhysConsultAddressGroup" class="form-group form-group-sm">
+				<!--Physician info  ---------->
+				<h3 style="color:rgb(158, 206, 249);margin-left:-20px;">Health-Care Practitioner Information</h3>
+				<div class="row rowwider">
+					<!--Physician infor on the left-->
+					<div class="col-xs-6">
+						<div class="cssReAmGroupBorder">
+							<div id="reamPhysTitleGroup" class="form-group form-group-sm">
+								<label for="reamPhysTitle" class="cssReAmLabel">Title</label>
+								<input class="form-control" id="reamPhysTitle" placeholder="Title" />
+							</div>
+							<div id="reamPhysFirstNameGroup" class="form-group form-group-sm required">
+								<label for="reamPhysFirstName" class="cssReAmLabel">Physician's name</label>
+								<div style="border:1px solid #ccc;border-radius:4px;">
+									<input class="form-control" id="reamPhysFirstName" name="reamPhysFirstName" placeholder="First Name" style="border:none;" />
+									<input class="form-control" id="reamPhysLastName" name="reamPhysLastName" placeholder="Last Name" style="border:none;" />
+								</div>
+							</div>
+
+
+
+							<div id="reamPhysBusinessAddressGroup" class="form-group form-group-sm required">
+								<label for="reamPhysBusinessAddress" class="cssReAmLabel">Business Address</label>
+								<div style="border:1px solid #ccc;border-radius:4px;">
+									<input class="form-control" id="reamPhysBusinessAddress" name="reamPhysBusinessAddress" placeholder="Street Address" style="border:none;" />
+									<input class="form-control" id="reamPhysCity" name="reamPhysCity" placeholder="City" style="border:none;" />
+									<select class="form-control" id="reamPhysProvince" name="reamPhysProvince" style="border:none;">
+										<option value="0">Choose province</option>
+										<option value="AB">Alberta</option>
+										<option value="BC">British Columbia</option>
+										<option value="MB">Manitoba</option>
+										<option value="NB">New Brunswick</option>
+										<option value="NL">Newfoundland and Labrador</option>
+										<option value="NS">Nova Scotia</option>
+										<option value="NT">Northwest Territories</option>
+										<option value="NU">Nunavut</option>
+										<option value="ON">Ontario</option>
+										<option value="PE">Prince Edward Island</option>
+										<option value="QC">Quebec</option>
+										<option value="SK">Saskatchewan</option>
+										<option value="YT">Yukon</option>
+									</select>
+									<input class="form-control" id="reamPhysPostalCode" name="reamPhysPostalCode" placeholder="Postal Code" style="border:none;" />
+								</div>
+							</div>
+
+						</div>
+					</div>
+					<!--physician infor on the right-->
+					<div class="col-xs-6">
+						<div class="cssReAmGroupBorder">
+							<!--<div id="reamPhysConsultAddressGroup" class="form-group form-group-sm">
 							<label for="reamPhysConsultAddress" class="cssReAmLabel">Consultation Address (if different from above) </label>
 							<input class="form-control" id="reamPhysConsultAddress" placeholder="Consultation Address"></input>
 						</div>  -->
-						<div id="reamPhysLicenceNoGroup" class="form-group form-group-sm required">
-							<label for="reamPhysLicenceNo" class="cssReAmLabel">Physician licence number</label>
-							<input class="form-control" id="reamPhysLicenceNo" name="reamPhysLicenceNo" placeholder="Number" />
-						</div>
+							<div id="reamPhysLicenceNoGroup" class="form-group form-group-sm required">
+								<label for="reamPhysLicenceNo" class="cssReAmLabel">Physician licence number</label>
+								<input class="form-control" id="reamPhysLicenceNo" name="reamPhysLicenceNo" placeholder="Number" />
+							</div>
 
-						<div id="reamPhysEmailGroup" class="form-group form-group-sm required">
-							<label for="reamPhysEmail" class="cssReAmLabel">Email</label>
-							<input class="form-control" id="reamPhysEmail" name="reamPhysEmail" placeholder="Email" />
-						</div>
-						<div id="reamPhysPhoneGroup" class="form-group form-group-sm">
-							<label for="reamPhysPhone" class="cssReAmLabel">Phone</label>
-							<input class="form-control" id="reamPhysPhone" name="reamPhysPhone" placeholder="Phone" />
-						</div>
-						<div id="reamPhysFaxGroup" class="form-group form-group-sm">
-							<label for="reamPhysFax" class="cssReAmLabel">Fax</label>
-							<input class="form-control" id="reamPhysFax" name="reamPhysFax" placeholder="Fax" />
-						</div>
+							<div id="reamPhysEmailGroup" class="form-group form-group-sm required">
+								<label for="reamPhysEmail" class="cssReAmLabel">Email</label>
+								<input class="form-control" id="reamPhysEmail" name="reamPhysEmail" placeholder="Email" />
+							</div>
+							<div id="reamPhysPhoneGroup" class="form-group form-group-sm">
+								<label for="reamPhysPhone" class="cssReAmLabel">Phone</label>
+								<input class="form-control" id="reamPhysPhone" name="reamPhysPhone" placeholder="Phone" />
+							</div>
+							<div id="reamPhysFaxGroup" class="form-group form-group-sm">
+								<label for="reamPhysFax" class="cssReAmLabel">Fax</label>
+								<input class="form-control" id="reamPhysFax" name="reamPhysFax" placeholder="Fax" />
+							</div>
 
-						<div id="reamPhysEditGroup" style="display: none; font-family: Arial; font-size: smaller; color: blue; font-style: italic;">
-							Updated on:
-							<span id="reamPhysUpdatedAt"></span>
-							<a href="#" style="float: right;" id="reamPhysEdit">Edit <span class="glyphicon glyphicon-pencil"></span></a>
+							<div id="reamPhysEditGroup" style="display: none; font-family: Arial; font-size: smaller; color: blue; font-style: italic;">
+								Updated on:
+								<span id="reamPhysUpdatedAt"></span>
+								<a href="#" style="float: right;" id="reamPhysEdit">Edit <span class="glyphicon glyphicon-pencil"></span></a>
+							</div>
 						</div>
-					</div>
-				</div>
-
-			</div>
-
-			<!--close text---------->
-			<div class="row">
-				<div class="col-xs-12">
-					<div>
-						By signing this document, the health-care practitioner is attesting that the information contained in this document is correct and complete.
-					</div>
-				</div>
-			</div>
-			<!--Physicician signature---------->
-			<div class="row" style="margin-top: 15px;">
-				<div class="col-xs-6">
-					<div id="reamPhysSignatureGroup" class="form-group form-group-sm required">
-						<label for="reamPhysSignature" class="cssReAmLabel">Physician's Signature</label><br />
-						<canvas class="cssPadSignature" id="reamPhysSignature"></canvas>
-						<div class="cssReAmLabel print" style="display: none;" id="reamPrintPhysName"></div>
-					</div>
-					<div id="Div2" class="form-group form-group-sm no-print">
-						<button class="btn btn-xs btn-default" id="reamPhysSignatureErase" type="button" style="display:inline-block;"><span class="glyphicon glyphicon-erase"></span>Erase</button>
-						<a href="#" id="reamSignatureEdit" style="display:none; font-family: Arial; font-size: smaller; color: blue; font-style: italic;">Edit <span class="glyphicon glyphicon-pencil"></span></a>
-
-					</div>
-				</div>
-				<div class="col-xs-6">
-					<div id="Div1" class="form-group form-group-sm">
-						<label for="reamPhysSigDate" class="cssReAmLabel">Date</label>
-						<div class="form-control" id="reamPhysSigDate" style="border: none; border-bottom: 1px solid #444; border-radius: initial;" />
 					</div>
 
 				</div>
-			</div>
 
-			<!--submit buttons---------->
-			<div class="row no-print">
-				<div class="col-xs-12" style="text-align: center;">
-					<button class="btn btn-info" style="width: 100px;" id="reamBtnSubmit" type="submit">Submit</button>
-					<button class="btn btn-default" style="width: 100px;display:none;" id="reamBtnPrint" type="submit">Print </button>
-					<button class="btn btn-warning" style="width: 100px;" id="reamBtnCancel" type="button">Cancel</button>
+				<!--close text---------->
+				<div class="row">
+					<div class="col-xs-12">
+						<div>
+							By signing this document, the health-care practitioner is attesting that the information contained in this document is correct and complete.
+						</div>
+					</div>
+				</div>
+				<!--Physicician signature---------->
+				<div class="row" style="margin-top: 15px;">
+					<div class="col-xs-6">
+						<div id="reamPhysSignatureGroup" class="form-group form-group-sm required">
+							<label for="reamPhysSignature" class="cssReAmLabel">Physician's Signature</label><br />
+							<canvas class="cssPadSignature" id="reamPhysSignature"></canvas>
+							<div class="cssReAmLabel print" style="display: none;" id="reamPrintPhysName"></div>
+						</div>
+						<div id="Div2" class="form-group form-group-sm no-print" data-html2canvas-ignore="true">
+							<button class="btn btn-xs btn-default" id="reamPhysSignatureErase" type="button" style="display:inline-block;"><span class="glyphicon glyphicon-erase"></span>Erase</button>
+							<a href="#" id="reamSignatureEdit" style="display:none; font-family: Arial; font-size: smaller; color: blue; font-style: italic;">Edit <span class="glyphicon glyphicon-pencil"></span></a>
+
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div id="Div1" class="form-group form-group-sm">
+							<label for="reamPhysSigDate" class="cssReAmLabel">Date</label>
+							<div class="form-control" id="reamPhysSigDate" style="border: none; border-bottom: 1px solid #444; border-radius: initial;" />
+						</div>
+
+					</div>
+				</div>
+
+				<!--submit buttons---------->
+				<div class="row no-print" data-html2canvas-ignore="true">
+					<div class="col-xs-12" style="text-align: center;">
+						<button class="btn btn-info" style="width: 100px;" id="reamBtnSubmit" type="submit">Submit</button>
+						<button class="btn btn-default" style="width: 100px;display:none;" id="reamBtnPrint" type="submit">Print </button>
+						<button class="btn btn-warning" style="width: 100px;" id="reamBtnCancel" type="button">Cancel</button>
+					</div>
+				</div>
+				<!--testing space-->
+				<div style="height: 100px;">
 				</div>
 			</div>
-			<!--testing space-->
-			<div style="height: 100px;">
-			</div>
-		</div>
-	</form>
+		</form>
+	</div>
+	<div id="signature" style="border:1px black solid;"></div>
 	<input type="button" id="create_pdf" value="Generate PDF">
+	<input type="button" id="create_imgsvg" value="Generate signature SVG">
 </body>
 </html>
