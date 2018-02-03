@@ -3,6 +3,52 @@
 <head>
 	<meta charset="utf-8" />
 	<title></title>
+	<style>
+		.hqicPopup {
+			width: 620px;
+			height: 166px;
+			background: white;
+			border-color: rgb(38,171,222);
+			border-style: solid;
+			border-top-width: 36px;
+			border-left-width: 3px;
+			border-right-width: 3px;
+			border-bottom-width: 3px;
+			display: block;
+			/*center vertically and horizontally*/
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			margin: auto;
+			z-index: 101;
+		}
+
+		.hqicPopup_msg {
+			width: 90%;
+			margin: auto;
+			text-align: center;
+			font-family: Arial;
+			margin-top: 5px;
+		}
+		/*general*/
+		.hqicButton {
+			width: 95px;
+			height: 29px;
+			background-color: rgb(15,117,189);
+			border: 1px solid rgb(63,186,240);
+			font-size: 12px;
+			color: rgb(255, 255, 255);
+		}
+
+			.hqicButton:hover {
+				background-color: rgb(124, 205, 241);
+				border: 2px solid rgb(255, 255, 255);
+			}
+	</style>
+
+
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
 	
 	<script>
@@ -312,6 +358,8 @@
 
 
 	</script>
+
+
 </head>
 <body>
 	<div id="htmlSource">
@@ -324,6 +372,20 @@
 	<input type="button" value="get PDF" onclick="createPdf();" />
 	<input type="button" value="post test" onclick="postCreaePrescriptionFormdata_mutipart1();" />
 	<input type="button" value="get Doctor list" onclick="getDoctorList();" />
+
+
+	<div class='hqicPopup' id='' + boxId + '' style='width:450px;'>
+		<div class='hqicPopup_msg' style='font-size: 14px; color: #808080; padding-top: 6px;'>Please select license producer</div>
+		<div class='hqicPopup_msg' style='font-size: 14px; color: #333; font-weight: bold; padding-top: 5px;text-align:left;padding-left:50px;'>
+			<label><input type='radio' name='ServiceProvider' /> Canopy Growth (Tweed, Metrum, Bedrocan) </label><br />
+			<label><input type='radio' name='ServiceProvider' checked /> Ample Care Platform LPs </label>
+		</div>
+		<div class='hqicPopup_msg' style='font-size: 12px; color: #58585B; font-weight: normal; font-style: italic; padding-top: 12px;'></div>
+		<div class='hqicPopup_msg' style='position:absolute;bottom:22px;right:22px;'>
+			<button class='hqicButton' id='hqicBoxSelectSpOk'>SELECT</button>
+			<button class='hqicButton' id='hqicBoxSelectSpCancel'>CANCEL</button>
+		</div>
+	</div>
 
 </body>
 </html>
